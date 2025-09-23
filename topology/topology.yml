@@ -1,0 +1,63 @@
+# Default setting for the scenario.
+defaults:
+  device: cumulus
+  #provider: virtualbox
+  provider: libvirt
+  vagrant:
+    memory: 1024
+    cpus: 1
+
+# Routing Protocol
+module: [ospf]
+
+# Routers are Cumulus VX
+nodes:
+  r1: {}
+  r2: {}
+  r3: {}
+  # Two hosts, each on their corresponding LAN.
+  h1: { device: linux }
+  h2: { device: linux }
+
+links:
+  # Left host LAN: h1 --- r1
+  - name: h1-lan
+    h1:
+      ipv4: 192.168.10.10/24
+    r1:
+      ipv4: 192.168.10.1/24
+    ospf:
+      area: 0
+      passive: true
+
+  # Right host LAN: h2 --- r2
+  - name: h2-lan
+    h2:
+      ipv4: 192.168.20.10/24
+    r2:
+      ipv4: 192.168.20.1/24
+    ospf:
+      area: 0
+      passive: true
+
+  # Core triangle between routers
+  - r1:
+      ipv4: 10.0.12.1/30
+    r2:
+      ipv4: 10.0.12.2/30
+    ospf:
+      area: 0
+
+  - r2:
+      ipv4: 10.0.23.1/30
+    r3:
+      ipv4: 10.0.23.2/30
+    ospf:
+      area: 0
+
+  - r1:
+      ipv4: 10.0.13.1/30
+    r3:
+      ipv4: 10.0.13.2/30
+    ospf:
+      area: 0

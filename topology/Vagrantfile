@@ -1,0 +1,180 @@
+VAGRANT_COMMAND = ARGV[0]
+
+Vagrant.configure("2") do |config|
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.management_network_address = "192.168.121.0/24"
+    libvirt.default_prefix = "topology_"
+  end
+  vm_name = "r1"
+  config.vm.define vm_name do |r1|
+    r1.vm.provider :libvirt do |domain|
+      domain.management_network_mac = "08:4f:a9:01:00:00"
+      domain.qemu_use_session = false
+    end
+    r1.vm.box = "CumulusCommunity/cumulus-vx"
+    r1.vm.box_version = "4.4.5"
+    r1.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+
+    r1.vm.provider :libvirt do |domain|
+      domain.cpus = 2
+      domain.memory = 1024
+    end
+    r1.vm.provider :libvirt do |domain|
+    end
+
+    r1.vm.network :private_network,
+
+                  :libvirt__network_name => "topology_1",
+                  :libvirt__forward_mode => "veryisolated",
+                  :libvirt__dhcp_enabled => false,
+                  :libvirt__iface_name => "vgif_r1_1",
+                  :libvirt__mtu => 9500,
+                  :autostart => true,
+                  :auto_config => false
+    r1.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.1",
+                  :libvirt__tunnel_local_port => "10002",
+                  :libvirt__tunnel_ip => "127.1.1.2",
+                  :libvirt__tunnel_port => "10002",
+                  :libvirt__iface_name => "vgif_r1_2",
+                  auto_config: false
+    r1.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.1",
+                  :libvirt__tunnel_local_port => "10003",
+                  :libvirt__tunnel_ip => "127.1.1.3",
+                  :libvirt__tunnel_port => "10002",
+                  :libvirt__iface_name => "vgif_r1_3",
+                  auto_config: false
+  end
+  vm_name = "r2"
+  config.vm.define vm_name do |r2|
+    r2.vm.provider :libvirt do |domain|
+      domain.management_network_mac = "08:4f:a9:02:00:00"
+      domain.qemu_use_session = false
+    end
+    r2.vm.box = "CumulusCommunity/cumulus-vx"
+    r2.vm.box_version = "4.4.5"
+    r2.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+
+    r2.vm.provider :libvirt do |domain|
+      domain.cpus = 2
+      domain.memory = 1024
+    end
+    r2.vm.provider :libvirt do |domain|
+    end
+
+    r2.vm.network :private_network,
+
+                  :libvirt__network_name => "topology_2",
+                  :libvirt__forward_mode => "veryisolated",
+                  :libvirt__dhcp_enabled => false,
+                  :libvirt__iface_name => "vgif_r2_1",
+                  :libvirt__mtu => 9500,
+                  :autostart => true,
+                  :auto_config => false
+    r2.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.2",
+                  :libvirt__tunnel_local_port => "10002",
+                  :libvirt__tunnel_ip => "127.1.1.1",
+                  :libvirt__tunnel_port => "10002",
+                  :libvirt__iface_name => "vgif_r2_2",
+                  auto_config: false
+    r2.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.2",
+                  :libvirt__tunnel_local_port => "10003",
+                  :libvirt__tunnel_ip => "127.1.1.3",
+                  :libvirt__tunnel_port => "10001",
+                  :libvirt__iface_name => "vgif_r2_3",
+                  auto_config: false
+  end
+  vm_name = "r3"
+  config.vm.define vm_name do |r3|
+    r3.vm.provider :libvirt do |domain|
+      domain.management_network_mac = "08:4f:a9:03:00:00"
+      domain.qemu_use_session = false
+    end
+    r3.vm.box = "CumulusCommunity/cumulus-vx"
+    r3.vm.box_version = "4.4.5"
+    r3.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+
+    r3.vm.provider :libvirt do |domain|
+      domain.cpus = 2
+      domain.memory = 1024
+    end
+    r3.vm.provider :libvirt do |domain|
+    end
+
+    r3.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.3",
+                  :libvirt__tunnel_local_port => "10001",
+                  :libvirt__tunnel_ip => "127.1.1.2",
+                  :libvirt__tunnel_port => "10003",
+                  :libvirt__iface_name => "vgif_r3_1",
+                  auto_config: false
+    r3.vm.network :private_network,
+                  :libvirt__tunnel_type => "udp",
+                  :libvirt__tunnel_local_ip => "127.1.1.3",
+                  :libvirt__tunnel_local_port => "10002",
+                  :libvirt__tunnel_ip => "127.1.1.1",
+                  :libvirt__tunnel_port => "10003",
+                  :libvirt__iface_name => "vgif_r3_2",
+                  auto_config: false
+  end
+  vm_name = "h1"
+  config.vm.define vm_name do |h1|
+    h1.vm.provider :libvirt do |domain|
+      domain.management_network_mac = "08:4f:a9:04:00:00"
+      domain.qemu_use_session = false
+    end
+    h1.vm.box = "bento/ubuntu-24.04"
+    h1.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+
+    h1.vm.provider :libvirt do |domain|
+      domain.cpus = 1
+      domain.memory = 1024
+    end
+    h1.vm.provider :libvirt do |domain|
+    end
+
+    h1.vm.network :private_network,
+
+                  :libvirt__network_name => "topology_1",
+                  :libvirt__forward_mode => "veryisolated",
+                  :libvirt__dhcp_enabled => false,
+                  :libvirt__iface_name => "vgif_h1_1",
+                  :libvirt__mtu => 9500,
+                  :autostart => true,
+                  :auto_config => false
+  end
+  vm_name = "h2"
+  config.vm.define vm_name do |h2|
+    h2.vm.provider :libvirt do |domain|
+      domain.management_network_mac = "08:4f:a9:05:00:00"
+      domain.qemu_use_session = false
+    end
+    h2.vm.box = "bento/ubuntu-24.04"
+    h2.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+
+    h2.vm.provider :libvirt do |domain|
+      domain.cpus = 1
+      domain.memory = 1024
+    end
+    h2.vm.provider :libvirt do |domain|
+    end
+
+    h2.vm.network :private_network,
+
+                  :libvirt__network_name => "topology_2",
+                  :libvirt__forward_mode => "veryisolated",
+                  :libvirt__dhcp_enabled => false,
+                  :libvirt__iface_name => "vgif_h2_1",
+                  :libvirt__mtu => 9500,
+                  :autostart => true,
+                  :auto_config => false
+  end
+end

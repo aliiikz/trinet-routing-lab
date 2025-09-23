@@ -1,0 +1,8 @@
+# Ansible inventory created from ['/home/aliii/Programming/trinet-routing-lab/topology/topology.yml', 'package:topology-defaults.yml']
+#
+
+%YAML 1.1
+---
+netlab_module:
+- routing
+- ospf

@@ -1,0 +1,124 @@
+# Ansible inventory created from ['/home/aliii/Programming/trinet-routing-lab/topology/topology.yml', 'package:topology-defaults.yml']
+#
+
+%YAML 1.1
+---
+ansible_user: vagrant
+ansible_ssh_pass: vagrant
+ansible_network_os: cumulus
+ansible_connection: paramiko
+netlab_show_command:
+- sudo
+- vtysh
+- -c
+- show $@
+netlab_initial: always
+features:
+  initial:
+    system_mtu: true
+    ipv4:
+      unnumbered: true
+    ipv6:
+      lla: true
+  bfd: {}
+  bgp:
+    ipv6_lla: true
+    rfc8950: true
+    activate_af: true
+    local_as: true
+    vrf_local_as: true
+    import:
+    - ospf
+    - ripv2
+    - connected
+    - static
+    - vrf
+    community:
+      standard:
+      - standard
+      - large
+      large:
+      - large
+      extended:
+      - extended
+      2octet:
+      - standard
+  dhcp:
+    client:
+      ipv4: true
+      ipv6: true
+      routing: true
+    relay:
+      ipv4: true
+  evpn:
+    irb: true
+    asymmetrical_irb: true
+  gateway:
+    protocol:
+    - anycast
+    - vrrp
+  lag:
+    passive: false
+  ospf:
+    unnumbered: true
+    import:
+    - bgp
+    - ripv2
+    - connected
+    - static
+    - vrf
+    default: true
+    password: true
+    priority: true
+    timers: true
+  ripv2:
+    ipv4: true
+    ipv6: true
+    passive: true
+    import:
+    - bgp
+    - isis
+    - ospf
+    - connected
+    - static
+    - vrf
+  routing:
+    policy:
+      set:
+        locpref: true
+        med: true
+        weight: true
+        prepend: true
+        community:
+          standard: true
+          large: true
+          extended: true
+          append: true
+      match:
+      - prefix
+      - nexthop
+      - aspath
+      - community
+    prefix: true
+    aspath: true
+    community:
+      expanded: true
+    static:
+      vrf: true
+      inter_vrf: true
+  stp:
+    supported_protocols:
+    - stp
+    - rstp
+    enable_per_port: true
+    port_type: true
+  vlan:
+    model: switch
+    svi_interface_name: vlan{vlan}
+    subif_name: '{ifname}.{vlan.access_id}'
+  vrf:
+    ospfv2: true
+    bgp: true
+    ripv2: true
+    ripng: true
+  vxlan: {}

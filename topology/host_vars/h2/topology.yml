@@ -1,0 +1,52 @@
+# Ansible inventory created from ['/home/aliii/Programming/trinet-routing-lab/topology/topology.yml', 'package:topology-defaults.yml']
+#
+
+%YAML 1.1
+---
+interfaces:
+- ipv4: 192.168.20.10/24
+  name: h2-lan
+  linkindex: 2
+  role: stub
+  type: lan
+  bridge: topology_2
+  ifindex: 1
+  ifname: eth1
+  neighbors:
+  - ipv4: 192.168.20.1/24
+    ifname: swp1
+    node: r2
+  gateway:
+    ipv4: 192.168.20.1/24
+box: bento/ubuntu-24.04
+role: host
+af:
+  ipv4: true
+mgmt:
+  ifname: eth0
+  mac: 08:4f:a9:05:00:00
+  ipv4: 192.168.121.105
+routing:
+  static:
+  - ipv4: 172.16.0.0/16
+    nexthop:
+      ipv4: 192.168.20.1
+      intf: eth1
+      idx: 0
+  - ipv4: 10.0.0.0/24
+    nexthop:
+      ipv4: 192.168.20.1
+      intf: eth1
+      idx: 0
+  - ipv4: 10.1.0.0/16
+    nexthop:
+      ipv4: 192.168.20.1
+      intf: eth1
+      idx: 0
+  - ipv4: 10.2.0.0/24
+    nexthop:
+      ipv4: 192.168.20.1
+      intf: eth1
+      idx: 0
+module:
+- routing

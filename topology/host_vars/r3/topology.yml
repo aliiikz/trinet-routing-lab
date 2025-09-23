@@ -1,0 +1,59 @@
+# Ansible inventory created from ['/home/aliii/Programming/trinet-routing-lab/topology/topology.yml', 'package:topology-defaults.yml']
+#
+
+%YAML 1.1
+---
+interfaces:
+- ipv4: 10.0.23.2/30
+  ospf:
+    area: 0.0.0.0
+    passive: false
+    network_type: point-to-point
+  linkindex: 4
+  type: p2p
+  name: r3 -> r2
+  ifindex: 1
+  ifname: swp1
+  neighbors:
+  - ipv4: 10.0.23.1/30
+    ifname: swp3
+    node: r2
+- ipv4: 10.0.13.2/30
+  ospf:
+    area: 0.0.0.0
+    passive: false
+    network_type: point-to-point
+  linkindex: 5
+  type: p2p
+  name: r3 -> r1
+  ifindex: 2
+  ifname: swp2
+  neighbors:
+  - ipv4: 10.0.13.1/30
+    ifname: swp3
+    node: r1
+box: CumulusCommunity/cumulus-vx:4.4.5
+module:
+- ospf
+ospf:
+  area: 0.0.0.0
+  router_id: 10.0.0.3
+  af:
+    ipv4: true
+mtu: 1500
+af:
+  ipv4: true
+mgmt:
+  ifname: eth0
+  mac: 08:4f:a9:03:00:00
+  ipv4: 192.168.121.103
+loopback:
+  type: loopback
+  neighbors: []
+  virtual_interface: true
+  ifindex: 0
+  ifname: lo
+  ipv4: 10.0.0.3/32
+  ospf:
+    area: 0.0.0.0
+    passive: false
