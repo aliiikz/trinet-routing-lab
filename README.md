@@ -27,8 +27,6 @@ A simple network topology built with three **Cumulus VX** routers forming a tria
    source trinet/bin/activate
    ```
 
-````
-
 2. Install dependencies:
    ```bash
    netlab install
