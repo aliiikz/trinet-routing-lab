@@ -16,7 +16,6 @@ A simple network topology built with three **Cumulus VX** routers forming a tria
 - **KVM + QEMU** – hypervisor and emulator for VMs
 - **Vagrant** – VM provisioning
 - **Libvirt** – virtualization management
-- [Containerlab](https://containerlab.dev) – manage network labs
 - **Ansible** – automated configuration management
 
 ## Setup
