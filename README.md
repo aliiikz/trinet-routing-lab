@@ -4,7 +4,7 @@ A simple network topology built with three **Cumulus VX** routers forming a tria
 
 ## Topology
 
-![Trinet Topology](topology.png)
+![Trinet Topology](img/topology.png)
 
 - **Routers**: R1, R2, R3 (Cumulus VX)
 - **Hosts**: H1, H2 (Ubuntu 24.04)
@@ -21,12 +21,14 @@ A simple network topology built with three **Cumulus VX** routers forming a tria
 ## Setup
 
 1. Create and activate a Python virtual environment:
+
    ```bash
    python3 -m venv trinet
    source trinet/bin/activate
    ```
 
 2. Install dependencies:
+
    ```bash
    netlab install
    ```
@@ -43,4 +45,7 @@ A simple network topology built with three **Cumulus VX** routers forming a tria
 ## Testing Connectivity
 
 - Set the correct default gateway for hosts then verify hosts connectivity.
-````
+
+```
+
+```
